@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name        = "as_new-san"
-    gem.homepage    = "http://github.com/alloy/as_new_san"
+    gem.homepage    = "http://github.com/Fingertips/as_new-san"
     gem.email       = "eloy.de.enige@gmail.com"
     gem.authors     = ["Eloy Duran"]
     gem.summary     = "A simple plugin which allows you to create records in the database, but treat them as if they were new records."
