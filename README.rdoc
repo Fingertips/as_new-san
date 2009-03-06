@@ -1,4 +1,6 @@
 = AsNewSan
 
-Allows you to create a record in the database, but it's used as if it were a
-new record. See AsNewSan for documentation and an example.
+A simple plugin which allows you to create records in the database, but treat
+them as if they were new records.
+
+See AsNewSan for documentation and an example.
