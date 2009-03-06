@@ -1,7 +1,4 @@
-= as_new_san
+= AsNewSan
 
-Description goes here.
-
-== Copyright
-
-Copyright (c) 2009 Eloy Duran. See LICENSE for details.
+Allows you to create a record in the database, but it's used as if it were a
+new record. See AsNewSan for documentation and an example.

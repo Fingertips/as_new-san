@@ -1,0 +1,1 @@
+require 'as_new_san'

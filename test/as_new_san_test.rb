@@ -1,7 +1,32 @@
-require 'test_helper'
+require File.expand_path('../test_helper', __FILE__)
 
-class AsNewSanTest < Test::Unit::TestCase
-  def test_something_for_real
-    flunk "hey buddy, you should probably rename this file and start testing for real"
+describe "AsNewSan" do
+  include DBSetupAndTeardownHelper
+  
+  it "should really create a record for a `new` object with `as_new` set to `true`" do
+    lambda { BaconFlavour.as_new(:name => 'chunky') }.should.differ('BaconFlavour.count', +1)
+    BaconFlavour.find_by_name('chunky').as_new.should.be true
+  end
+  
+  it "should garbage collect any record which has been in the db for a specific period" do
+    old_record = BaconFlavour.as_new(:name => 'banana', :created_at => (Time.now - 1.week - 1))
+    new_record = BaconFlavour.as_new(:name => 'smoked')
+    
+    lambda { BaconFlavour.collect_garbage! }.should.differ('BaconFlavour.count', -1)
+  end
+  
+  it "should be possible to do a `find` without matching any `as_new` records" do
+    as_new_record = BaconFlavour.as_new(:name => 'smells as new')
+    not_as_new_record = BaconFlavour.create(:name => 'does not smell at all')
+    
+    BaconFlavour.find(:all).should == [as_new_record, not_as_new_record]
+    BaconFlavour.find_without_as_new(:all).should == [not_as_new_record]
+  end
+  
+  it "should set `as_new` records to `false` on update" do
+    record = BaconFlavour.as_new(:name => 'ice cream')
+    record.as_new_record?.should.be true
+    record.update_attribute(:name, 'that is right, bacon ice cream')
+    record.as_new_record?.should.be false
   end
 end
