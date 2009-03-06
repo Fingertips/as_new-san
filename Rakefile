@@ -28,9 +28,9 @@ end
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = 'as_new_san'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README*')
+  rdoc.title = 'AsNewSan'
+  rdoc.options << '--line-numbers' << '--inline-source' << '--charset=utf-8'
+  rdoc.rdoc_files.include('README*', 'LICENSE')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 

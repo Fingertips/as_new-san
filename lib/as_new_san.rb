@@ -11,6 +11,9 @@
 # An Active Record class using this mixin needs to have an +as_new+ boolean
 # column with the default value set to +false+ and a +created_at+ column.
 #
+# See AsNewSan::ClassMethods for documentation on the class methods added to
+# ActiveRecord::Base.
+#
 # Example:
 #
 #   class CreateMessages < ActiveRecord::Migration
