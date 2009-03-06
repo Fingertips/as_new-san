@@ -21,6 +21,16 @@ begin
       when you are creating new associated objects using Ajax calls.
     }
   end
+  
+  begin
+    require 'jewelry_portfolio/tasks'
+    JewelryPortfolio::Tasks.new do |p|
+      p.account = 'Fingertips'
+    end
+  rescue LoadError
+    puts "JewelryPortfolio not available. Install it with: sudo gem install Fingertips-jewelry_portfolio -s http://gems.github.com"
+  end
+  
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
