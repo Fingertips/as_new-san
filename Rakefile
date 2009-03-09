@@ -3,13 +3,14 @@ require 'rake'
 
 begin
   require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name        = "as_new-san"
-    gem.homepage    = "http://github.com/Fingertips/as_new-san"
-    gem.email       = "eloy.de.enige@gmail.com"
-    gem.authors     = ["Eloy Duran"]
-    gem.summary     = "A simple plugin which allows you to create records in the database, but treat them as if they were new records."
-    gem.description = %{
+  Jeweler::Tasks.new do |s|
+    s.name        = "as_new-san"
+    s.homepage    = "http://github.com/Fingertips/as_new-san"
+    s.email       = "eloy.de.enige@gmail.com"
+    s.authors     = ["Eloy Duran"]
+    s.summary     = "A simple plugin which allows you to create records in the database, but treat them as if they were new records."
+    s.files       = FileList['**/**'] # tmp until we've patched Jeweler to be able to easily add files to defaults
+    s.description = %{
       The AsNewSan mixin makes it easier to create associations on a new Active
       Record instance.
 
