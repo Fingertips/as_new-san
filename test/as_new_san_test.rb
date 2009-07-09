@@ -29,4 +29,14 @@ describe "AsNewSan", ActiveRecord::TestCase do
     record.update_attribute(:name, 'that is right, bacon ice cream')
     record.as_new_record?.should.be false
   end
+  
+  it "should define a named scope to include as_new records" do
+    as_new_record = BaconFlavour.as_new(:name => 'good as new')
+    BaconFlavour.include_as_new.find(:first, :conditions => { :name => 'good as new' }).should == as_new_record
+  end
+  
+  it "should define a named scope to exclude as_new records" do
+    as_new_record = BaconFlavour.as_new(:name => 'good as new')
+    BaconFlavour.exclude_as_new.find(:first, :conditions => { :name => 'good as new' }).should.be.nil
+  end
 end
