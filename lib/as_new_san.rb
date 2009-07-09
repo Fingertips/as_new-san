@@ -74,7 +74,6 @@
 module AsNewSan
   def self.included(base) #:nodoc:
     base.before_update(:unset_as_new)
-    base.named_scope :include_as_new, { :conditions => { :as_new => true } }
     base.named_scope :exclude_as_new, { :conditions => { :as_new => false } }
     base.extend(ClassMethods)
   end
@@ -96,25 +95,28 @@ module AsNewSan
     # Finds and destroys all the records where the as_new column is set to
     # +true+ and +created_at+ is longer than 1 week ago.
     def collect_garbage!
-      find_without_as_new(:all, :conditions => ['as_new = ? AND created_at < ?', true, Time.now - 1.week]).each(&:destroy)
+      find_including_new_records(:all, :conditions => ['as_new = ? AND created_at < ?', true, Time.now - 1.week]).each(&:destroy)
     end
     
     # Works the same as <tt>ActiveRecord::Base.find</tt> but only returns
     # records for which the as_new column is set to +false+.
-    def find_with_as_new(*args)
-      exclude_as_new.find_without_as_new(*args)
+    def find_excluding_new_records(*args)
+      exclude_as_new.find_including_new_records(*args)
     end
     
     # Works the same as <tt>ActiveRecord::Base.count</tt> but only returns
     # records for which the as_new column is set to +false+.
-    def count_with_as_new(*args)
-      exclude_as_new.count_without_as_new(*args)
+    def count_excluding_new_records(*args)
+      exclude_as_new.count_including_new_records(*args)
     end
     
     def self.extended(klass)
       class << klass
-        alias_method_chain :find, :as_new
-        alias_method_chain :count, :as_new
+        alias_method :find_including_new_records, :find
+        alias_method :find, :find_excluding_new_records
+        
+        alias_method :count_including_new_records, :count
+        alias_method :count, :count_excluding_new_records
       end
     end
   end
