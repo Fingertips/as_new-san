@@ -1,10 +1,10 @@
 require File.expand_path('../test_helper', __FILE__)
 
-describe "AsNewSan" do
+describe "AsNewSan", ActiveRecord::TestCase do
   include DBSetupAndTeardownHelper
   
-  it "should really create a record for a `new` object with `as_new` set to `true`" do
-    lambda { BaconFlavour.as_new(:name => 'chunky') }.should.differ('BaconFlavour.count', +1)
+  it "should really create a record for a `new' object with `as_new' set to `true'" do
+    assert_difference('BaconFlavour.count', +1) { BaconFlavour.as_new(:name => 'chunky') }
     BaconFlavour.find_by_name('chunky').as_new.should.be true
   end
   
@@ -12,10 +12,10 @@ describe "AsNewSan" do
     old_record = BaconFlavour.as_new(:name => 'banana', :created_at => (Time.now - 1.week - 1))
     new_record = BaconFlavour.as_new(:name => 'smoked')
     
-    lambda { BaconFlavour.collect_garbage! }.should.differ('BaconFlavour.count', -1)
+    assert_difference('BaconFlavour.count', -1) { BaconFlavour.collect_garbage! }
   end
   
-  it "should be possible to do a `find` without matching any `as_new` records" do
+  it "should be possible to do a `find' without matching any `as_new' records" do
     as_new_record = BaconFlavour.as_new(:name => 'smells as new')
     not_as_new_record = BaconFlavour.create(:name => 'does not smell at all')
     
@@ -23,7 +23,7 @@ describe "AsNewSan" do
     BaconFlavour.find_without_as_new(:all).should == [not_as_new_record]
   end
   
-  it "should set `as_new` records to `false` on update" do
+  it "should set `as_new' records to `false' on update" do
     record = BaconFlavour.as_new(:name => 'ice cream')
     record.as_new_record?.should.be true
     record.update_attribute(:name, 'that is right, bacon ice cream')
