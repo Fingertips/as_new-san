@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{as_new-san}
-  s.version = "0.1.1"
+  s.version = "0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Eloy Duran"]
-  s.date = %q{2009-03-09}
+  s.date = %q{2009-07-15}
   s.description = %q{The AsNewSan mixin makes it easier to create associations on a new Active Record instance.  Use the as_new method to instantiate new empty objects that are immediately saved to the database with a special flag marking them as new. Because new instances are already stored in the database, you always have an id available for creating associations. This means you can use the same views and controller logic for new and edit actions which is especially helpful when you are creating new associated objects using Ajax calls.}
   s.email = %q{eloy.de.enige@gmail.com}
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
