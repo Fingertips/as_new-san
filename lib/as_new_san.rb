@@ -49,10 +49,22 @@
 #       # Remove all records older than 1 week that have the `as_new` property set to `true`.
 #       Message.collect_garbage!
 #       
-#       # The mixin comes with the `find_without_as_new` class method, which behaves as the 
-#       # ActiveRecord::Base#find class method, but only finds records which have their 
-#       # `as_new` property set to `false`.
-#       @messages = Message.find_without_as_new(:all)
+#       # The mixin adds an `exclude_as_new` named_scope and makes `#find` and `#count` use it
+#       # out of the box.
+#       @messages = Message.find(:all)  # finds only records that have `as_new` set to `false`
+#       @messages = Message.count(:all) # counts only records that have `as_new` set to `false`
+#
+#       # If you need to find or count all records, even the ones with `as_new` set to `true`,
+#       # the mixin also comes with the `find_including_new_records` and `count_including_new_records`
+#       # class methods, which behave the same as ActiveRecord::Base#find and ActiveRecord::Base.count.
+#       @messages = Message.find_including_new_records(:all)  # finds all records
+#       @messages = Message.count_including_new_records(:all) # counts all records
+#
+#       # If you need to reload a record that has beed created with `as_new`, `reload` won't work.
+#       # You need to use `#find_including_new_records`.
+#       @message = Message.as_new
+#       @message.reload            # => ActiveRecord::RecordNotFound
+#       @message = Message.find_including_new_records(@message.id)
 #     end
 #     
 #     def new
@@ -65,7 +77,7 @@
 #     def update
 #       # The mixin comes with a `before_update` filter that sets the `as_new` column to 
 #       # `false` before saving the updated record.
-#       @message = Message.find(params[:id])
+#       @message = Message.find_including_new_records(params[:id])
 #       @message.update_attributes(params[:message])
 #
 #       # So, at this point the record is not marked `as_new` anymore.
